@@ -1,0 +1,46 @@
+# ─────────────────────────────
+# Python Bytecode & Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ─────────────────────────────
+# Docker & Logs
+*.log
+*.env
+.dockerignore
+
+# ─────────────────────────────
+# VS Code / JetBrains IDE settings
+.vscode/
+.idea/
+
+# ─────────────────────────────
+# Terraform files
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# ─────────────────────────────
+# System junk
+.DS_Store
+Thumbs.db
+*.swp
+
+# ─────────────────────────────
+# Binaries / Tools
+dev/k8s/minikube-linux-amd64
+*.exe
+*.tar.gz
+*.zip
+*.out
+
+# ─────────────────────────────
+# Node modules (if FE is Node/React later)
+node_modules/
+
+# ─────────────────────────────
+# Empty directory placeholders (if any)
+dev/ftend/*
+!dev/ftend/.gitkeep

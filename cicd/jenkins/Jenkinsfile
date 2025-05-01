@@ -2,45 +2,59 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "flask-todo-app"
-    IMAGE_TAG  = "v1"
-    LOCAL_REGISTRY = "localhost:5001"
+    IMAGE_NAME     = "flask-todo-app"               // Base name for the Docker image
+    LOCAL_REGISTRY = "localhost:5001"               // Local Docker registry for Minikube
   }
 
   stages {
 
-    stage('📥 Clone Backend Code') {
+    stage('Clone Backend Code') {
       steps {
         echo "Cloning backend code"
-        sh 'ls -l dev/bkend/app'
+        sh 'ls -l dev/bkend/app'                    // Just listing files as a check
       }
     }
 
-    stage('🐳 Build Docker Image') {
+    stage('Build Docker Image with Git Tag') {
       steps {
         script {
+          // Get Git commit short hash as image tag
+          COMMIT_HASH = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+          // Compose full image tag
+          IMAGE_TAG = "${LOCAL_REGISTRY}/${IMAGE_NAME}:${COMMIT_HASH}"
+
+          // Move to app directory and build
           dir('dev/bkend/app') {
-            sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+            sh "docker build -t ${IMAGE_TAG} ."
           }
         }
       }
     }
 
-    stage('📦 Push to Local Registry') {
+    stage('Push to Local Registry') {
       steps {
         script {
-          // Tag the image to point to local registry
-          sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${LOCAL_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
-          
-          // Push the image to local registry
-          sh "docker push ${LOCAL_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+          // Push the versioned image
+          sh "docker push ${IMAGE_TAG}"
+          sh "docker images | grep flask-todo-app"
+
         }
       }
     }
 
-    stage('✅ Done') {
+    stage('Deploy to Minikube') {
       steps {
-        echo "Image pushed to local registry successfully!"
+        script {
+          // Tell Kubernetes to use new image version
+          sh "kubectl set image deployment/flask-todo-deployment flask-todo=${IMAGE_TAG} --record"
+        }
+      }
+    }
+
+    stage('Done') {
+      steps {
+        echo "Deployment triggered with image: ${IMAGE_TAG}"
       }
     }
 
