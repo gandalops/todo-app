@@ -4,9 +4,11 @@ pipeline {
   environment {
     IMAGE_NAME = "flask-todo-app"
     IMAGE_TAG  = "v1"
+    LOCAL_REGISTRY = "localhost:5001"
   }
 
   stages {
+
     stage('📥 Clone Backend Code') {
       steps {
         echo "Cloning backend code"
@@ -24,10 +26,23 @@ pipeline {
       }
     }
 
-    stage('✅ Done') {
+    stage('📦 Push to Local Registry') {
       steps {
-        echo "Docker image ${IMAGE_NAME}:${IMAGE_TAG} is built successfully!"
+        script {
+          // Tag the image to point to local registry
+          sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${LOCAL_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+          
+          // Push the image to local registry
+          sh "docker push ${LOCAL_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+        }
       }
     }
+
+    stage('✅ Done') {
+      steps {
+        echo "Image pushed to local registry successfully!"
+      }
+    }
+
   }
 }
