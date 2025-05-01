@@ -1,0 +1,22 @@
+# dev/k8s/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-todo-deployment
+  labels:
+    app: flask-todo
+spec:
+  replicas: 1  # Number of pods to run
+  selector:
+    matchLabels:
+      app: flask-todo
+  template:
+    metadata:
+      labels:
+        app: flask-todo
+    spec:
+      containers:
+      - name: flask-todo
+        image: localhost:5001/flask-todo-app:v1  # Image from local registry
+        ports:
+        - containerPort: 5000  # Flask app listens on port 5000

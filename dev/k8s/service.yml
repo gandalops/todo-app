@@ -1,0 +1,13 @@
+# dev/k8s/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-todo-service
+spec:
+  selector:
+    app: flask-todo
+  ports:
+  - protocol: TCP
+    port: 80         # Service port (internal)
+    targetPort: 8000 # Flask app port in container
+  type: NodePort     # Allows external access via Minikube's NodePort
