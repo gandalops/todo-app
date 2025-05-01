@@ -10,14 +10,14 @@ pipeline {
     stage('📥 Clone Backend Code') {
       steps {
         echo "Cloning backend code"
-        sh 'ls -l ../dev/bkend/app'
+        sh 'ls -l dev/bkend/app'
       }
     }
 
     stage('🐳 Build Docker Image') {
       steps {
         script {
-          dir('../dev/bkend/app') {
+          dir('dev/bkend/app') {
             sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
           }
         }
