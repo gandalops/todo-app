@@ -1,0 +1,33 @@
+pipeline {
+  agent any
+
+  environment {
+    IMAGE_NAME = "flask-todo-app"
+    IMAGE_TAG  = "v1"
+  }
+
+  stages {
+    stage('📥 Clone Backend Code') {
+      steps {
+        echo "Cloning backend code"
+        sh 'ls -l ../dev/bkend/app'
+      }
+    }
+
+    stage('🐳 Build Docker Image') {
+      steps {
+        script {
+          dir('../dev/bkend/app') {
+            sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+          }
+        }
+      }
+    }
+
+    stage('✅ Done') {
+      steps {
+        echo "Docker image ${IMAGE_NAME}:${IMAGE_TAG} is built successfully!"
+      }
+    }
+  }
+}

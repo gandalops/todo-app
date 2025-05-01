@@ -16,7 +16,7 @@ cd dev/bkend/app
 docker build -t flask-todo-app:v1 .
 ```
 
-## 🚀 Run Instructions
+## Run Instructions
 
 ```bash
 # Map host port 8000 to container port 8000
@@ -37,28 +37,26 @@ docker run -d -p 8000:8000 flask-todo-app:v1
 | Tag used        | `flask-todo-app:v1`         |
 
 
-## 🧪 Verify Container
+## Verify Container
 
 ```bash
 docker ps        # Check running containers
 docker logs <id> # View logs if needed
 ```
 
-## 🧼 Cleanup
+## Cleanup
 
 ```bash
 docker stop <id>
 docker rm <id>
 ```
 
-## ✅ Status
+## Status
 
-This backend is now ready for:
+Backend is now ready for:
 
 - 🔧 Jenkins integration
 - 🚢 Docker push to registry
 - ☸️ K8s deployment via manifests
 
 
-## ✅ Next Step: Commit & Push
-## After that CI/CD setup under cicd/jenkins
