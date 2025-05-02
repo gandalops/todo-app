@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
       - name: flask-todo
-        image: localhost:5001/flask-todo-app:v1  # Image from local registry
+        image: flask-todo-app:v1  # Image from local registry
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000  # Flask app listens on port 5000

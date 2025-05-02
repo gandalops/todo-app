@@ -2,8 +2,7 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME     = "flask-todo-app"        // Base name for Docker image
-    LOCAL_REGISTRY = "localhost:5001"        // Local registry used by Minikube
+    IMAGE_NAME     = "flask-todo-app"        // Base name for Docker image, noregistry prefix
   }
 
   stages {
@@ -22,7 +21,7 @@ pipeline {
           COMMIT_HASH = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
           
           // Save as env var so next stage can use
-          env.IMAGE_TAG = "${LOCAL_REGISTRY}/${IMAGE_NAME}:${COMMIT_HASH}"
+          env.IMAGE_TAG = "${IMAGE_NAME}:${COMMIT_HASH}"
 
           // Build Docker image
           dir('dev/bkend/app') {
@@ -32,19 +31,19 @@ pipeline {
       }
     }
 
-    stage('Push to Local Registry') {
+    stage('Load Image into Minikube') {
       steps {
         script {
-          sh "docker push ${env.IMAGE_TAG}"
-          sh "docker images | grep ${IMAGE_NAME}"
+          // Load the image into Minikube (so K8s can use it)
+          sh "minikube image load ${env.IMAGE_TAG}"
         }
       }
     }
 
     stage('Done') {
       steps {
-        echo "Image pushed: ${env.IMAGE_TAG}"
-        echo "Run this manually on your terminal:"
+        echo "Image loaded into Minikube: ${env.IMAGE_TAG}"
+        echo "To deploy it, run:"
         echo "kubectl set image deployment/flask-todo-deployment flask-todo=${env.IMAGE_TAG} --record"
       }
     }
