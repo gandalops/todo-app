@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 app = Flask(__name__)
 
 @app.route('/')
@@ -16,11 +16,14 @@ def home():
             <body>
                 <h1>Hello Yogesh!</h1>
                 <p>Welcome to the world of DevOps... </p>
+                <p><strong>You're running Fullstack Version 2 🚀</strong></p>
             </body>
         </html>
     '''
 
+@app.route('/version')
+def version():
+    return jsonify({"version": "fullstack-v2", "status": "running"})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
-
-
