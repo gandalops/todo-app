@@ -11,19 +11,29 @@ def home():
                     body { font-family: Arial; background-color: #f4f4f4; text-align: center; margin-top: 50px; }
                     h1 { color: #333; }
                     p { color: #555; }
+                    .jenkins-msg {
+                        color: blue;
+                        font-weight: bold;
+                        font-size: 2em;
+                    }
                 </style>
             </head>
             <body>
                 <h1>Hello Yogesh!</h1>
                 <p>Welcome to the world of DevOps... </p>
-                <p><strong>You're running Fullstack Version 2 🚀</strong></p>
+                <p><strong>You're running Fullstack Version 3 🚀</strong></p>
+                <p class="jenkins-msg">Automated by Jenkins CI 🚀</p>
             </body>
         </html>
     '''
 
 @app.route('/version')
 def version():
-    return jsonify({"version": "fullstack-v2", "status": "running"})
+    return jsonify({"version": "fullstack-v3", "status": "running"})
+
+@app.route('/jenkins')
+def jenkins_info():
+    return jsonify({"pipeline": "Jenkins", "status": "success"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
