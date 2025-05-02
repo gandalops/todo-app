@@ -42,8 +42,9 @@ pipeline {
 
     stage('Done') {
       steps {
-        echo "Image loaded into Minikube: ${env.IMAGE_TAG}"
-        echo "To deploy it, run:"
+        echo "Image built: ${env.IMAGE_TAG}"
+        echo "Run this on your host terminal:"
+        echo "minikube image load ${env.IMAGE_TAG}"
         echo "kubectl set image deployment/flask-todo-deployment flask-todo=${env.IMAGE_TAG} --record"
       }
     }
