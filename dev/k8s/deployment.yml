@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-todo-deployment
+  name: flask-fullstack-deployment
   labels:
-    app: flask-todo
+    app: flask-fullstack
 spec:
   replicas: 1  # Number of pods to run
   selector:
     matchLabels:
-      app: flask-todo
+      app: flask-fullstack
   template:
     metadata:
       labels:
-        app: flask-todo
+        app: flask-fullstack
     spec:
       containers:
-      - name: flask-todo
-        image: flask-todo-app:v1  # Image from local registry
+      - name: flask-fullstack
+        image: flask-fullstack-app:v1 # Image from local registry
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 5000  # Flask app listens on port 5000
+        - containerPort: 8000  # Flask app listens on port 5000
