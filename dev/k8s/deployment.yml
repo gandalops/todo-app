@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flask-fullstack
-        image: flask-fullstack-app:v4 # Image from local registry
+        image: flask-fullstack-app:v5     # Image from local registry
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8000  # Flask app listens on port 5000
+        - containerPort: 8000             # Flask app listens on port 5000
