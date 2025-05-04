@@ -1,0 +1,44 @@
+pipeline {
+  agent any
+
+  environment {
+    IMAGE_NAME     = "flask-todo-app"        // Base name for Docker image, noregistry prefix
+  }
+
+  stages {
+
+    stage('Clone Backend Code') {
+      steps {
+        echo "Cloning backend code"
+        sh 'ls -l dev/bkend/app'             // Confirm app files exist
+      }
+    }
+
+    stage('Build Docker Image') {
+      steps {
+        script {
+          // Get Git short hash for tagging
+          COMMIT_HASH = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+          
+          // Save as env var so next stage can use
+          env.IMAGE_TAG = "${IMAGE_NAME}:${COMMIT_HASH}"
+
+          // Build Docker image
+          dir('dev/bkend/app') {
+            sh "docker build -t ${env.IMAGE_TAG} ."
+          }
+        }
+      }
+    }
+
+     stage('Show Manual Steps') {
+      steps {
+        echo "Docker image built successfully: ${env.IMAGE_TAG}"
+        echo "Run the following commands in your terminal to deploy:"
+        echo "minikube image load ${env.IMAGE_TAG}"
+        echo "kubectl set image deployment/flask-todo-deployment flask-todo=${env.IMAGE_TAG} --record"
+      }
+    }
+
+  }
+}

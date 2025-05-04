@@ -1,0 +1,13 @@
+# dev/k8s/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-fullstack-service
+spec:
+  selector:
+    app: flask-fullstack
+  type: NodePort
+  ports:
+  - port: 8000       # Service port
+    targetPort: 8000 # Container port
+    nodePort: 30080  # Exposed by Minikube (you can access it via browser)   # Allows external access via Minikube's NodePort
