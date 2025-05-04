@@ -44,3 +44,7 @@ node_modules/
 # Empty directory placeholders (if any)
 dev/ftend/*
 !dev/ftend/.gitkeep
+
+# ─────────────────────────────
+# Virtual environments
+venv/
