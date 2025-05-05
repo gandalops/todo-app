@@ -1,4 +1,3 @@
-# dev/k8s/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +5,7 @@ metadata:
   labels:
     app: flask-todo
 spec:
-  replicas: 1  # Number of pods to run
+  replicas: 1
   selector:
     matchLabels:
       app: flask-todo
@@ -17,10 +16,10 @@ spec:
     spec:
       containers:
       - name: flask-todo-app
-        image: yogidockr/flask-todo-app:v6.2     # Image from local registry
+        image: yogidockr/flask-todo-app:v6.2
         imagePullPolicy: Always
         ports:
-        - containerPort: 8000             # Flask app listens on port 5000
+        - containerPort: 8000
         livenessProbe:
           httpGet:
             path: /meta
@@ -40,5 +39,12 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "250m"
-
-    
+        volumeMounts:
+        - name: todo-db-volume
+          mountPath: /app/todo.db
+          subPath: todo.db
+      volumes:
+      - name: todo-db-volume
+        hostPath:
+          path: /home/av7579/todo-app-db
+          type: Directory
