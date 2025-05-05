@@ -2,22 +2,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-fullstack-deployment
+  name: flask-todo-deployment
   labels:
-    app: flask-fullstack
+    app: flask-todo
 spec:
   replicas: 1  # Number of pods to run
   selector:
     matchLabels:
-      app: flask-fullstack
+      app: flask-todo
   template:
     metadata:
       labels:
-        app: flask-fullstack
+        app: flask-todo
     spec:
       containers:
-      - name: flask-fullstack
-        image: flask-fullstack-app:v5     # Image from local registry
-        imagePullPolicy: IfNotPresent
+      - name: flask-todo-app
+        image: yogidockr/flask-todo-app:v6.2     # Image from local registry
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000             # Flask app listens on port 5000
+        livenessProbe:
+          httpGet:
+            path: /meta
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /version
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+
+    
