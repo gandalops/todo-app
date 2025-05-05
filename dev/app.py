@@ -2,6 +2,9 @@
 
 from flask import Flask
 from bkend.routes.main import main_bp
+from bkend.services.task_service import init_db  # ⬅️ Import init_db
+
+init_db()  # ⬅️ Ensure DB and tasks table are ready
 
 app = Flask(__name__,
             template_folder='ftend/templates',

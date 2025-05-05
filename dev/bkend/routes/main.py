@@ -44,3 +44,15 @@ def delete_task(task_id):
     else:
         return jsonify({"error": "Task not found"}), 404
 
+@main_bp.route('/tasks/<int:task_id>', methods=['PATCH'])
+def update_task_route(task_id):
+    from bkend.services.task_service import update_task
+    data = request.get_json()
+    if not data or 'description' not in data:
+        return jsonify({"error": "Description is required"}), 400
+
+    success = update_task(task_id, data['description'])
+    if success:
+        return jsonify({"message": "Task updated"}), 200
+    else:
+        return jsonify({"error": "Task not found"}), 404

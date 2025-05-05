@@ -48,3 +48,8 @@ dev/ftend/*
 # ─────────────────────────────
 # Virtual environments
 venv/
+
+# ─────────────────────────────
+# Ignore SQLite DB file
+dev/todo.db
+
