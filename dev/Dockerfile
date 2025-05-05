@@ -1,20 +1,24 @@
-# 🏷️ Step 1: Use official Python image
-FROM python:3.9-slim
+# 🏷️ Step 1: Use official Python base image
+FROM python:3.11-slim
 
-# 🏷️ Step 2: Set workdir
+# 🏷️ Step 2: Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# 🏷️ Step 3: Set workdir
 WORKDIR /app
 
-# 🏷️ Step 3: Copy local app files to container
-# 1st # Main entry point for the app
-#2nd # Directory containing the apps modules like routes, templates, static etc
-COPY app.py .                    
-COPY app/ ./app/                 
+# 🏷️ Step 4.1: Copy dependency file first for better caching
+COPY requirements.txt .
 
-# 🏷️ Step 4: Install Python dependencies
-RUN pip install --no-cache-dir flask
+# 🏷️ Step 5:  Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port your Flask app runs on
+# 🏷️ Step 4.2: Copy the rest of the application
+COPY . .               
+
+#🏷️ Step 6: Expose the port your Flask app runs on
 EXPOSE 8000
 
-# 🏷️ Step 5: Set container entry point
+# 🏷️ Step 7: Default command to run the Flask app
 CMD ["python", "app.py"]
