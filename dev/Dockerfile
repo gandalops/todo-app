@@ -2,23 +2,26 @@
 FROM python:3.11-slim
 
 # 🏷️ Step 2: Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# 🏷️ Step 3: Set workdir
+# 🏷️ Step 3: Set working directory inside container
 WORKDIR /app
 
-# 🏷️ Step 4.1: Copy dependency file first for better caching
+# 🏷️ Step 4: Copy dependency file separately for caching
 COPY requirements.txt .
 
-# 🏷️ Step 5:  Install dependencies
+# 🏷️ Step 5: Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 🏷️ Step 4.2: Copy the rest of the application
-COPY . .               
+# 🏷️ Step 6: Copy application code and required folders
+COPY app.py .
+COPY bkend/ bkend/
+COPY ftend/templates/ templates/
+COPY ftend/static/ static/
 
-#🏷️ Step 6: Expose the port your Flask app runs on
+# 🏷️ Step 7: Expose the port your Flask app uses
 EXPOSE 8000
 
-# 🏷️ Step 7: Default command to run the Flask app
+# 🏷️ Step 8: Run the app
 CMD ["python", "app.py"]

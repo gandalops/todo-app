@@ -6,9 +6,8 @@ from bkend.services.task_service import init_db  # ⬅️ Import init_db
 
 init_db()  # ⬅️ Ensure DB and tasks table are ready
 
-app = Flask(__name__,
-            template_folder='ftend/templates',
-            static_folder='ftend/static')
+app = Flask(__name__) # ✅ Flask use default /templates and /static
+            
 
 app.register_blueprint(main_bp)
 

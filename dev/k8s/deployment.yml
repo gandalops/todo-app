@@ -46,5 +46,5 @@ spec:
       volumes:
       - name: todo-db-volume
         hostPath:
-          path: /home/av7579/todo-app-db
+          path: /home/docker/todo-app-db
           type: Directory
