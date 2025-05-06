@@ -11,6 +11,9 @@ DOCKER_IMAGE=yogidockr/$IMAGE_NAME:$IMAGE_TAG
 #echo "[STEP 1] Navigate to dev/"
 #cd dev || exit 1
 
+# Move into the dev/ directory (even if called from outside)
+cd "$(dirname "$0")"
+
 # ------------------------------------------
 # 2. Build Docker image
 # ------------------------------------------
