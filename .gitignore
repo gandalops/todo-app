@@ -53,3 +53,4 @@ venv/
 # Ignore SQLite DB file
 dev/todo.db
 
+text.txt
