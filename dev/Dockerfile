@@ -17,8 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 🏷️ Step 6: Copy application code and required folders
 COPY app.py .
 COPY bkend/ bkend/
-COPY ftend/templates/ templates/
-COPY ftend/static/ static/
+COPY ftend/templates/ ftend/templates/
+COPY ftend/static/ ftend/static/
 
 # 🏷️ Step 7: Expose the port your Flask app uses
 EXPOSE 8000
