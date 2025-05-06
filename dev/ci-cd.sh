@@ -8,14 +8,14 @@ IMAGE_NAME=flask-todo-app
 IMAGE_TAG=v6.2
 DOCKER_IMAGE=yogidockr/$IMAGE_NAME:$IMAGE_TAG
 
-echo "[STEP 1] Navigate to dev/"
-cd dev
+#echo "[STEP 1] Navigate to dev/"
+#cd dev || exit 1
 
 # ------------------------------------------
 # 2. Build Docker image
 # ------------------------------------------
 echo "[STEP 2] Building Docker image: $DOCKER_IMAGE"
-docker build -t $DOCKER_IMAGE .
+docker build -t $DOCKER_IMAGE dev/
 
 # ------------------------------------------
 # 3. Login to DockerHub
