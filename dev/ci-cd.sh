@@ -15,7 +15,7 @@ DOCKER_IMAGE=yogidockr/$IMAGE_NAME:$IMAGE_TAG
 # 2. Build Docker image
 # ------------------------------------------
 echo "[STEP 2] Building Docker image: $DOCKER_IMAGE"
-docker build -t $DOCKER_IMAGE dev/
+docker build -t $DOCKER_IMAGE Dockerfile .
 
 # ------------------------------------------
 # 3. Login to DockerHub
