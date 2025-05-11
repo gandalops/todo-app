@@ -70,7 +70,6 @@ Stay tuned for future releases with improved architecture, security, observabili
 ### ✅ v4 – Jenkins CI Integration
 
 * Wrote `Jenkinsfile` with CI stages:
-
   * Git clone
   * Docker build + tag
   * Push to local Docker registry
@@ -83,18 +82,18 @@ Stay tuned for future releases with improved architecture, security, observabili
 * Added `kubectl set image` for automated rollout in Jenkins.
 * Cleaned up old pods/images post-deployment.
 
-## 🔮 What's Next?
+### ✅ v6 – Fullstack Split with Modular Structure
 
-Upcoming versions will include:
+* Split code into dedicated folders:
+   dev/bkend/ → Backend logic with app.py and Dockerfile
+   dev/ftend/ → Frontend HTML/CSS (under templates/, static/)
+* Introduced __init__.py for modular Flask app structure.
+* ci-cd.sh updated to build from dev/ and deploy to Kubernetes.
+* Cleaned up legacy backup folders and unused Compose files.
+* Docker image built and tested using Jenkins pipeline.
+* Kubernetes rollout tested using kubectl set image and minikube service --url.
 
-* Backend database integration (e.g., SQLite or PostgreSQL)
-* CI/CD enhancements (e.g., test automation, Trivy scans)
-* Helm chart for production-ready Kubernetes deployments
-* Secrets management and monitoring integration
-* Cloud deployment on AWS/GCP with best practices
-* Infrastructure as Code using Terraform
-
-## 🤝 Contributions & Feedback
+### 🤝 Contributions & Feedback
 
 This project is for educational and portfolio purposes. Feedback and suggestions are welcome!
 
