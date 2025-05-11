@@ -41,10 +41,11 @@ dev/k8s/minikube-linux-amd64
 node_modules/
 
 # ─────────────────────────────
-# Empty directory placeholders (if any)
-dev/ftend/*
-!dev/ftend/.gitkeep
-
-# ─────────────────────────────
 # Virtual environments
 venv/
+
+# ─────────────────────────────
+# Ignore SQLite DB file
+dev/todo.db
+
+text.txt
