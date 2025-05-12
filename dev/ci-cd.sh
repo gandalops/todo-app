@@ -23,6 +23,8 @@ git status
 # -------------------------------
 # STEP 2: Unit Tests
 # -------------------------------
+# Activate virtual environment
+source ~/work/git-repos/todo-app/venv/bin/activate
 echo "[STEP 2] Running unit tests"
 pytest dev/test/
 
