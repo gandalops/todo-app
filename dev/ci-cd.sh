@@ -24,7 +24,8 @@ git status
 # STEP 2: Unit Tests
 # -------------------------------
 # Activate virtual environment
-source ~/work/git-repos/todo-app/venv/bin/activate
+# source ~/work/git-repos/todo-app/venv/bin/activate # for bash scripts
+. ~/work/git-repos/todo-app/venv/bin/activate # . is POSIX-compliant and works in /bin/sh too
 echo "[STEP 2] Running unit tests"
 pytest dev/test/
 
