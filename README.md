@@ -1,101 +1,56 @@
-A simple yet evolving Todo app built with Flask, Docker, and Kubernetes, integrated into a Jenkins CI/CD pipeline. This project demonstrates step-by-step implementation of modern DevOps practices in a local development environment.
+# todo-app
 
-## 🚀 Project Status
+A small Todo app built with Flask, Docker, Jenkins and Minikube, created in 2025 to practise a local CI/CD workflow.
 
-This project is **actively evolving** through multiple versions.  
-Stay tuned for future releases with improved architecture, security, observability, and deployment strategies.
+## Project status
 
-## 🧰 Tech Stack
+Archived. I built this in 2025 as a hands-on DevOps exercise and stopped working on it after version 6.2. It is kept as a small demonstration.
 
-| Layer           | Technology          |
-|-----------------|---------------------|
-| Backend         | Python (Flask)      |
-| Frontend        | HTML, CSS           |
-| Containerization| Docker              |
-| CI/CD Pipeline  | Jenkins             |
-| Orchestration   | Minikube (K8s)      |
-| Infra as Code   | Terraform (planned) |
+## How it was built
 
+Commits come from two GitHub accounts on purpose. A second account acted as the developer pushing code, and this account acted as the central repository where I reviewed and accepted changes, to practise a team workflow.
 
+## Tech stack
 
-## ⚙️ Local Setup Instructions
+| Layer | Technology |
+| --- | --- |
+| Backend | Python (Flask) |
+| Database | SQLite (from v6.1) |
+| Frontend | HTML, CSS |
+| Containerization | Docker |
+| Registry | DockerHub |
+| CI/CD | Jenkins (dev/ci-cd.sh) |
+| Orchestration | Kubernetes on Minikube |
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/<your-username>/<repo-name>.git
-   cd <repo-name>
-````
+## Run locally
 
-2. **Run Locally Without Docker**
+From the dev folder.
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   pip install flask
-   python app.py
-   ```
+Without Docker:
 
-3. **Run with Docker**
+    cd dev
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    python app.py
 
-   ```bash
-   docker build -t flask-todo-app:v5 .
-   docker run -p 8000:8000 flask-todo-app:v5        #flask default port is 5000
-   ```
+With Docker:
 
-4. **Deploy via Jenkins CI/CD to Minikube**
+    cd dev
+    docker build -t flask-todo-app:v6.2 .
+    docker run -p 8000:8000 flask-todo-app:v6.2
 
-   * Make sure Jenkins is set up with Docker and kubectl access.
-   * Use the included `Jenkinsfile` to automate build and deploy stages.
+Then open http://localhost:8000
 
-## 📌 Version History
+## CI/CD
 
-### ✅ v1 – Basic Flask App
+Jenkins runs dev/ci-cd.sh. The script builds the image, pushes it to DockerHub (credentials come from Jenkins as environment variables), applies the manifests in dev/k8s and waits for the rollout on Minikube.
 
-* Minimal `app.py` using Flask.
-* Single route with in-memory list for todos.
-* No frontend templates.
+## Security notes
 
-### ✅ v2 – UI Enhancement with HTML
+- Flask debug mode was switched off after a review of the code (November 2026).
+- No credentials are stored in the repository.
+- Known gaps: the container runs as root, there is no image or dependency scanning in the pipeline, and there are no automated tests.
 
-* Added `index.html` and basic form.
-* Enabled todo addition via browser.
-* Used Flask's `render_template`.
-
-### ✅ v3 – Dockerized the App
-
-* Added `Dockerfile`.
-* Built and ran the container locally.
-* Verified isolated deployment.
-
-### ✅ v4 – Jenkins CI Integration
-
-* Wrote `Jenkinsfile` with CI stages:
-  * Git clone
-  * Docker build + tag
-  * Push to local Docker registry
-* Started Minikube-based deployment testing.
-
-### ✅ v5 – Frontend Separation & Volume Mount
-
-* Separated frontend into `templates/` and `static/` folders.
-* Used `docker-compose` with volume mount for live dev.
-* Added `kubectl set image` for automated rollout in Jenkins.
-* Cleaned up old pods/images post-deployment.
-
-### ✅ v6 – Fullstack Split with Modular Structure
-
-* Split code into dedicated folders:
-   dev/bkend/ → Backend logic with app.py and Dockerfile
-   dev/ftend/ → Frontend HTML/CSS (under templates/, static/)
-* Introduced __init__.py for modular Flask app structure.
-* ci-cd.sh updated to build from dev/ and deploy to Kubernetes.
-* Cleaned up legacy backup folders and unused Compose files.
-* Docker image built and tested using Jenkins pipeline.
-* Kubernetes rollout tested using kubectl set image and minikube service --url.
-
-### 🤝 Contributions & Feedback
-
-This project is for educational and portfolio purposes. Feedback and suggestions are welcome!
-
-© 2025 Yogesh Shankar Gandal | DevSecOps Engineer
+© 2025 Yogesh Shankar Gandal 
 
